@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHT CET Mock Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== START SCREEN ===== -->
+  <div id="start-screen">
+    <div class="start-card">
+      <div class="start-logo">
+        <span class="logo-mht">MHT</span><span class="logo-cet">CET</span>
+      </div>
+      <h1>Mock Test 2024</h1>
+      <p class="start-subtitle">Maharashtra Common Entrance Test</p>
+      <div class="exam-info">
+        <div class="info-item"><span class="info-label">Total Questions</span><span class="info-val">150</span></div>
+        <div class="info-item"><span class="info-label">Total Marks</span><span class="info-val">200</span></div>
+        <div class="info-item"><span class="info-label">Duration</span><span class="info-val">180 min</span></div>
+        <div class="info-item"><span class="info-label">Sections</span><span class="info-val">3</span></div>
+      </div>
+      <div class="mark-scheme">
+        <h3>Marking Scheme</h3>
+        <ul>
+          <li>Physics &amp; Chemistry: <strong>+1</strong> for correct, <strong>0</strong> for incorrect</li>
+          <li>Mathematics: <strong>+2</strong> for correct, <strong>0</strong> for incorrect</li>
+        </ul>
+      </div>
+      <div class="legend-preview">
+        <h3>Question Status Legend</h3>
+        <div class="legend-row">
+          <span class="legend-box not-visited"></span> Not Visited
+          <span class="legend-box not-answered"></span> Not Answered
+          <span class="legend-box answered"></span> Answered
+          <span class="legend-box marked"></span> Marked for Review
+          <span class="legend-box answered-marked"></span> Answered &amp; Marked
+        </div>
+      </div>
+      <div class="start-name-row">
+        <label for="student-name">Candidate Name:</label>
+        <input type="text" id="student-name" placeholder="Enter your name" maxlength="60" />
+      </div>
+      <button id="start-btn" class="btn-primary btn-large">Start Exam</button>
+    </div>
+  </div>
+
+  <!-- ===== EXAM SCREEN ===== -->
+  <div id="exam-screen" class="hidden">
+    <header class="exam-header">
+      <div class="header-left">
+        <div class="header-logo"><span class="logo-mht">MHT</span><span class="logo-cet">CET</span></div>
+        <span class="header-title">Mock Test 2024</span>
+      </div>
+      <div class="header-center">
+        <span id="candidate-name-display" class="candidate-name"></span>
+      </div>
+      <div class="header-right">
+        <div class="timer-box">
+          <span class="timer-label">Time Left</span>
+          <span id="timer" class="timer-value">03:00:00</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="exam-body">
+      <!-- Left: Question Area -->
+      <div class="question-area">
+        <!-- Section Tabs -->
+        <div class="section-tabs">
+          <button class="tab-btn active" data-section="physics">Physics</button>
+          <button class="tab-btn" data-section="chemistry">Chemistry</button>
+          <button class="tab-btn" data-section="math">Mathematics</button>
+        </div>
+
+        <!-- Question Panel -->
+        <div class="question-panel">
+          <div class="question-meta">
+            <span id="question-label">Question <span id="q-number">1</span> of <span id="q-total">50</span></span>
+            <span id="question-marks-badge" class="marks-badge">+1 Mark</span>
+          </div>
+          <div class="question-text" id="question-text"></div>
+          <div class="options-list" id="options-list"></div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+          <div class="nav-left">
+            <button id="mark-btn" class="btn-mark">
+              <span>&#9873;</span> Mark for Review &amp; Next
+            </button>
+            <button id="clear-btn" class="btn-clear">Clear Response</button>
+          </div>
+          <div class="nav-right">
+            <button id="prev-btn" class="btn-secondary">&#8592; Previous</button>
+            <button id="next-btn" class="btn-primary">Next &#8594;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Palette Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-section-label" id="sidebar-section-label">Physics</div>
+        <div class="palette-legend">
+          <div class="leg-item"><span class="legend-box not-visited"></span><span>Not Visited</span></div>
+          <div class="leg-item"><span class="legend-box not-answered"></span><span>Not Answered</span></div>
+          <div class="leg-item"><span class="legend-box answered"></span><span>Answered</span></div>
+          <div class="leg-item"><span class="legend-box marked"></span><span>Marked</span></div>
+          <div class="leg-item"><span class="legend-box answered-marked"></span><span>Ans+Marked</span></div>
+        </div>
+        <div class="palette-grid" id="palette-grid"></div>
+        <div class="sidebar-stats" id="sidebar-stats"></div>
+        <button id="submit-btn" class="btn-submit">Submit Test</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RESULT SCREEN ===== -->
+  <div id="result-screen" class="hidden">
+    <div class="result-container">
+      <div class="result-header">
+        <div class="header-logo"><span class="logo-mht">MHT</span><span class="logo-cet">CET</span></div>
+        <h2>Test Result</h2>
+        <p id="result-name" class="result-candidate"></p>
+      </div>
+      <div class="result-scorecard">
+        <div class="score-circle">
+          <span id="result-score" class="score-number">0</span>
+          <span class="score-label">/ 200</span>
+        </div>
+        <div class="score-percent" id="score-percent">0%</div>
+      </div>
+      <div class="result-stats-grid">
+        <div class="stat-card green"><div class="stat-num" id="stat-correct">0</div><div class="stat-lbl">Correct</div></div>
+        <div class="stat-card red"><div class="stat-num" id="stat-wrong">0</div><div class="stat-lbl">Wrong</div></div>
+        <div class="stat-card gray"><div class="stat-num" id="stat-skipped">0</div><div class="stat-lbl">Skipped</div></div>
+        <div class="stat-card blue"><div class="stat-num" id="stat-total">150</div><div class="stat-lbl">Total</div></div>
+      </div>
+      <div class="result-section-breakdown">
+        <h3>Section-wise Performance</h3>
+        <table class="section-table">
+          <thead>
+            <tr><th>Section</th><th>Questions</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Marks</th><th>Max Marks</th></tr>
+          </thead>
+          <tbody>
+            <tr id="row-physics"></tr>
+            <tr id="row-chemistry"></tr>
+            <tr id="row-math"></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="result-actions">
+        <button id="review-btn" class="btn-secondary">Review Answers</button>
+        <button id="retake-btn" class="btn-primary">Retake Test</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REVIEW SCREEN ===== -->
+  <div id="review-screen" class="hidden">
+    <div class="review-container">
+      <div class="review-header">
+        <div class="header-logo"><span class="logo-mht">MHT</span><span class="logo-cet">CET</span></div>
+        <h2>Answer Review</h2>
+        <button id="back-to-result-btn" class="btn-secondary">&#8592; Back to Result</button>
+      </div>
+      <div class="review-section-tabs">
+        <button class="review-tab active" data-section="physics">Physics</button>
+        <button class="review-tab" data-section="chemistry">Chemistry</button>
+        <button class="review-tab" data-section="math">Mathematics</button>
+      </div>
+      <div id="review-list" class="review-list"></div>
+    </div>
+  </div>
+
+  <!-- ===== SUBMIT MODAL ===== -->
+  <div id="submit-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3>Submit Test?</h3>
+      <p>Are you sure you want to submit the test?</p>
+      <div class="modal-stats" id="modal-stats"></div>
+      <div class="modal-actions">
+        <button id="modal-cancel-btn" class="btn-secondary">Cancel</button>
+        <button id="modal-submit-btn" class="btn-submit">Yes, Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
