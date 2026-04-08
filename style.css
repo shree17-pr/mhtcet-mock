@@ -16,6 +16,14 @@
   --gray-900:      #1a202c;
   --white:         #ffffff;
 
+  /* Dark theme */
+  --dark-bg:       #0f172a;
+  --dark-card:     #111827;
+  --dark-text:     #e5e7eb;
+  --dark-primary:  #3b82f6;
+  --dark-accent:   #22c55e;
+  --dark-danger:   #ef4444;
+
   /* Status colours */
   --status-not-visited:     #b0b8c1;
   --status-not-answered:    #e74c3c;
@@ -28,13 +36,322 @@ html { font-size: 15px; }
 body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gray-100); color: var(--gray-900); min-height: 100vh; }
 .hidden { display: none !important; }
 
-/* ===== SHARED COMPONENTS ===== */
-.logo-mht { color: var(--primary); font-weight: 900; font-size: 1.5rem; letter-spacing: .02em; }
-.logo-cet { color: var(--accent);  font-weight: 900; font-size: 1.5rem; }
-.header-logo { display: inline-flex; align-items: center; gap: .1em; }
+/* ===== DARK THEME FOR START AND RESULT SCREENS ===== */
+#start-screen, #result-screen {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+#start-screen .start-card, #result-screen .result-container {
+  background: var(--dark-card);
+  color: var(--dark-text);
+}
+
+#start-screen .logo-mht { color: var(--dark-primary); }
+#start-screen .logo-cet { color: var(--dark-accent); }
+
+#result-screen .logo-mht { color: var(--dark-primary); }
+#result-screen .logo-cet { color: var(--dark-accent); }
+
+#start-screen .btn-primary { background: var(--dark-primary); color: var(--white); }
+#start-screen .btn-primary:hover { background: #2563eb; }
+
+#result-screen .btn-primary { background: var(--dark-primary); color: var(--white); }
+#result-screen .btn-primary:hover { background: #2563eb; }
+
+#result-screen .btn-secondary { background: var(--dark-card); color: var(--dark-primary); border-color: var(--dark-primary); }
+#result-screen .btn-secondary:hover { background: var(--dark-primary); color: var(--white); }
+
+#result-screen table th, #result-screen table td { color: var(--dark-text); border-color: var(--gray-700); }
+
+/* ===== NAVIGATION TABS ===== */
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  background: var(--dark-card);
+  padding: 1rem;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 0;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  text-decoration: none;
+  color: var(--dark-text);
+  background: var(--dark-bg);
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.tab:hover, .tab.active {
+  background: var(--dark-primary);
+  color: #ffffff;
+}
+
+/* ===== ANALYSIS SCREENS ===== */
+#overview-screen, #sectional-screen, #time-screen, #question-screen, #performance-screen, #charts-screen {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.analysis-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--dark-card);
+  border-radius: 0 0 12px 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.analysis-header .logo-mht { color: var(--dark-primary); }
+.analysis-header .logo-cet { color: var(--dark-accent); }
+
+/* Overview styles */
+.overview-metrics {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0.5rem;
+  flex: 1;
+  min-width: 150px;
+}
+
+.metric-card h3 { margin: 0 0 0.5rem 0; color: var(--dark-text); }
+.metric-value { font-size: 1.5rem; font-weight: bold; color: var(--dark-primary); }
+.metric-label { font-size: 0.9rem; color: var(--gray-500); }
+
+.correct-wrong-summary {
+  margin-bottom: 2rem;
+}
+
+.summary-bars {
+  display: flex;
+  height: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--dark-bg);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.correct-bar { background: #22c55e; }
+.wrong-bar { background: #ef4444; }
+
+.section-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.section-card {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+}
+
+.subject-highlights {
+  display: flex;
+  justify-content: space-around;
+}
+
+.highlight-card {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  flex: 1;
+  margin: 0 0.5rem;
+}
+
+.highlight-card.best { border: 2px solid #22c55e; }
+.highlight-card.weak { border: 2px solid #ef4444; }
+
+/* Sectional styles */
+.section-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section-detail {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.section-metrics {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.metric { font-weight: bold; color: var(--dark-text); }
+
+/* Time styles */
+.time-metrics {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.time-per-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.section-time-card {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+}
+
+.timeline-placeholder {
+  text-align: center;
+  background: var(--dark-bg);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+/* Question styles */
+.filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  background: var(--dark-bg);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--dark-primary);
+  color: #ffffff;
+}
+
+.question-table-container {
+  overflow-x: auto;
+}
+
+.question-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--dark-card);
+  color: var(--dark-text);
+}
+
+.question-table th, .question-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-700);
+}
+
+.question-table th {
+  background: var(--dark-bg);
+  font-weight: bold;
+}
+
+.status-correct { color: #22c55e; }
+.status-wrong { color: #ef4444; }
+.status-skipped { color: #8a92a8; }
+
+/* Performance styles */
+.summary-metrics {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.attempt-strategy, .suggestions {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.suggestions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.suggestions li {
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.suggestions li:before {
+  content: '•';
+  color: var(--dark-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Charts styles */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.chart-card {
+  background: var(--dark-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.chart-card h3 {
+  margin-bottom: 1rem;
+  color: var(--dark-text);
+}
 
 .btn-primary  { background: var(--primary); color: var(--white); border: none; border-radius: 6px; padding: .55rem 1.3rem; font-size: .95rem; font-weight: 600; cursor: pointer; transition: background .2s; }
-.btn-primary:hover  { background: var(--primary-dark); }
+.btn-primary:disabled { background: var(--gray-500); cursor: not-allowed; }
+.btn-primary:disabled:hover { background: var(--gray-500); }
 .btn-secondary{ background: var(--white); color: var(--primary); border: 2px solid var(--primary); border-radius: 6px; padding: .5rem 1.2rem; font-size: .95rem; font-weight: 600; cursor: pointer; transition: all .2s; }
 .btn-secondary:hover{ background: var(--primary); color: var(--white); }
 .btn-large    { padding: .85rem 2.5rem; font-size: 1.1rem; border-radius: 8px; }

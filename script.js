@@ -36,7 +36,12 @@ let state = {
 
   // per-question state keyed by section then array index
   answers:   { physics: [], chemistry: [], math: [] },
-  statuses:  { physics: [], chemistry: [], math: [] }
+  statuses:  { physics: [], chemistry: [], math: [] },
+
+  // section time tracking
+  physicsTime: 0,
+  chemistryTime: 0,
+  mathTime: 0
 };
 
 // ── Helpers ─────────────────────────────────────────
@@ -75,6 +80,10 @@ function initState() {
     state.answers[sec]  = Array(totalQuestions(sec)).fill(null);
     state.statuses[sec] = Array(totalQuestions(sec)).fill(STATUS.NOT_VISITED);
   });
+  // Initialize section times
+  state.physicsTime = 0;
+  state.chemistryTime = 0;
+  state.mathTime = 0;
 }
 
 // ── Timer ────────────────────────────────────────────
@@ -85,10 +94,20 @@ function formatTime(seconds) {
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
+function formatSectionTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
 function startTimer() {
   const timerEl = document.getElementById('timer');
   state.timerInterval = setInterval(() => {
     state.timeLeft--;
+    // Increment section time
+    if (state.currentSection === 'physics') state.physicsTime++;
+    else if (state.currentSection === 'chemistry') state.chemistryTime++;
+    else if (state.currentSection === 'math') state.mathTime++;
     timerEl.textContent = formatTime(state.timeLeft);
 
     // Warning colouring
@@ -97,6 +116,13 @@ function startTimer() {
       timerEl.classList.add('danger');
     } else if (state.timeLeft <= 900) {
       timerEl.classList.add('warning');
+    }
+
+    // Section locking: After 90 minutes, lock Physics/Chemistry, enable Maths
+    if (state.timeLeft <= 5400) {
+      document.querySelector('[data-section="math"]').disabled = false;
+      document.querySelector('[data-section="physics"]').disabled = true;
+      document.querySelector('[data-section="chemistry"]').disabled = true;
     }
 
     if (state.timeLeft <= 0) {
@@ -256,6 +282,14 @@ function goToPrev() {
 
 // ── Section switching ────────────────────────────────
 function switchSection(section) {
+  if (section === 'math' && state.timeLeft > 5400) {
+    alert("Mathematics section will be available after 90 minutes.");
+    return;
+  }
+  if ((section === 'physics' || section === 'chemistry') && state.timeLeft <= 5400) {
+    alert("Physics and Chemistry sections are now locked. Please continue with Mathematics.");
+    return;
+  }
   state.currentSection = section;
   state.currentIndex   = 0;
   setActiveTab(section);
@@ -335,58 +369,105 @@ function submitExam() {
   stopTimer();
   document.getElementById('submit-modal').classList.add('hidden');
   document.getElementById('exam-screen').classList.add('hidden');
-  showResult();
+
+  // Calculate results
+  const results = calculateResults();
+  storeResults(results);
+  window.location.href = 'overview.html';
 }
 
-// ── Result ────────────────────────────────────────────
-function showResult() {
-  document.getElementById('result-screen').classList.remove('hidden');
-  document.getElementById('result-name').textContent = state.candidateName || 'Candidate';
-
+function calculateResults() {
+  const sections = [];
   let totalScore = 0;
-  let totalCorrect = 0, totalWrong = 0, totalSkipped = 0;
-
-  const rows = { physics: document.getElementById('row-physics'), chemistry: document.getElementById('row-chemistry'), math: document.getElementById('row-math') };
+  let totalCorrect = 0, totalWrong = 0;
 
   SECTIONS.forEach(sec => {
     const qs = getQuestions(sec);
-    let correct = 0, wrong = 0, skipped = 0, score = 0;
+    let correct = 0, wrong = 0, skipped = 0, score = 0, attempted = 0;
 
+    const questions = [];
     qs.forEach((q, i) => {
       const userAns = state.answers[sec][i];
-      if (userAns === null || userAns === undefined) {
-        skipped++;
-      } else if (userAns === q.answer) {
-        correct++;
-        score += MARKS[sec];
+      let status = 'Skipped';
+      if (userAns !== null && userAns !== undefined) {
+        if (userAns === q.answer) {
+          status = 'Correct';
+          correct++;
+          score += MARKS[sec];
+        } else {
+          status = 'Wrong';
+          wrong++;
+        }
+        attempted++;
       } else {
-        wrong++;
+        skipped++;
       }
+      questions.push({
+        id: i + 1,
+        userAnswer: userAns !== null && userAns !== undefined ? String.fromCharCode(65 + userAns) : '-',
+        correctAnswer: String.fromCharCode(65 + q.answer),
+        status
+      });
     });
 
-    totalScore   += score;
-    totalCorrect += correct;
-    totalWrong   += wrong;
-    totalSkipped += skipped;
+    const accuracy = attempted > 0 ? ((correct / attempted) * 100).toFixed(1) : 0;
+    const time = formatSectionTime(state[`${sec}Time`]);
 
-    rows[sec].innerHTML = `
-      <td><strong>${SECTION_NAMES[sec]}</strong></td>
-      <td>${totalQuestions(sec)}</td>
-      <td style="color:var(--success);font-weight:700">${correct}</td>
-      <td style="color:var(--danger);font-weight:700">${wrong}</td>
-      <td>${skipped}</td>
-      <td style="color:var(--primary);font-weight:700">${score}</td>
-      <td>${MAX_MARKS[sec]}</td>
-    `;
+    sections.push({
+      name: SECTION_NAMES[sec],
+      score,
+      maxMarks: MAX_MARKS[sec],
+      correct,
+      wrong,
+      skipped,
+      attempted,
+      total: totalQuestions(sec),
+      accuracy,
+      time,
+      questions
+    });
+
+    totalScore += score;
+    totalCorrect += correct;
+    totalWrong += wrong;
   });
 
-  document.getElementById('result-score').textContent = totalScore;
-  document.getElementById('score-percent').textContent =
-    `${((totalScore / 200) * 100).toFixed(1)}%`;
-  document.getElementById('stat-correct').textContent = totalCorrect;
-  document.getElementById('stat-wrong').textContent   = totalWrong;
-  document.getElementById('stat-skipped').textContent = totalSkipped;
-  document.getElementById('stat-total').textContent   = 150;
+  const bestSubject = sections.reduce((best, sec) => sec.score > best.score ? sec : best, sections[0]).name;
+
+  return {
+    candidateName: state.candidateName,
+    totalScore,
+    totalCorrect,
+    totalWrong,
+    sections,
+    bestSubject
+  };
+}
+
+function storeResults(results) {
+  // Store current result
+  localStorage.setItem('mhtcet-results', JSON.stringify(results));
+
+  // Update leaderboard
+  let leaderboard = JSON.parse(localStorage.getItem('mhtcet-leaderboard')) || [];
+  leaderboard.push({
+    name: results.candidateName,
+    score: results.totalScore,
+    time: TOTAL_TIME_SECONDS - state.timeLeft, // total time taken
+    date: new Date().toISOString()
+  });
+
+  // Sort by score desc, then time asc
+  leaderboard.sort((a, b) => b.score - a.score || a.time - b.time);
+
+  // Keep top 10
+  leaderboard = leaderboard.slice(0, 10);
+  localStorage.setItem('mhtcet-leaderboard', JSON.stringify(leaderboard));
+
+  // Calculate rank
+  const userIndex = leaderboard.findIndex(entry => entry.name === results.candidateName && entry.score === results.totalScore);
+  results.rank = userIndex + 1;
+  localStorage.setItem('mhtcet-results', JSON.stringify(results));
 }
 
 // ── Review ────────────────────────────────────────────
@@ -441,31 +522,15 @@ function renderReviewSection(section) {
   });
 }
 
-// ── Retake ────────────────────────────────────────────
-function retakeExam() {
-  stopTimer();
-  // Reset state
-  state.currentSection = 'physics';
-  state.currentIndex   = 0;
-  state.timeLeft       = TOTAL_TIME_SECONDS;
-  state.submitted      = false;
-  state.candidateName  = '';
-  initState();
-
-  // Reset UI
-  document.getElementById('result-screen').classList.add('hidden');
-  document.getElementById('review-screen').classList.add('hidden');
-  document.getElementById('exam-screen').classList.add('hidden');
-  document.getElementById('start-screen').classList.remove('hidden');
-  document.getElementById('student-name').value = '';
-  document.getElementById('timer').textContent = '03:00:00';
-  document.getElementById('timer').className = 'timer-value';
-}
-
 // ── Start exam ────────────────────────────────────────
 function startExam() {
   const nameInput = document.getElementById('student-name');
-  state.candidateName = nameInput.value.trim() || 'Candidate';
+  const name = nameInput.value.trim();
+  if (!name) {
+    alert("Please enter your name to start the exam.");
+    return;
+  }
+  state.candidateName = name;
 
   document.getElementById('start-screen').classList.add('hidden');
   document.getElementById('exam-screen').classList.remove('hidden');
@@ -529,9 +594,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Result: Review button
   document.getElementById('review-btn').addEventListener('click', () => showReview('physics'));
-
-  // Result: Retake button
-  document.getElementById('retake-btn').addEventListener('click', retakeExam);
 
   // Review: section tabs
   document.querySelectorAll('.review-tab').forEach(tab => {

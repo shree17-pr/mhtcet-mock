@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHT CET Overview</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="overview-screen">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab active">Overview</a>
+      <a href="sectional-analysis.html" class="tab">Sectional</a>
+      <a href="time-analysis.html" class="tab">Time</a>
+      <a href="question-analysis.html" class="tab">Questions</a>
+      <a href="performance-summary.html" class="tab">Performance</a>
+      <a href="charts.html" class="tab">Charts</a>
+    </div>
+    <div class="analysis-container">
+      <div class="analysis-header">
+        <div class="header-logo"><span class="logo-mht">MHT</span><span class="logo-cet">CET</span></div>
+        <h2>Test Overview</h2>
+        <p id="overview-name" class="analysis-candidate"></p>
+      </div>
+
+      <div class="overview-metrics">
+        <div class="metric-card">
+          <h3>Total Score</h3>
+          <span id="total-score" class="metric-value">0</span>
+          <span class="metric-label">/ 200</span>
+        </div>
+        <div class="metric-card">
+          <h3>Percentile</h3>
+          <span id="percentile" class="metric-value">85th</span>
+        </div>
+        <div class="metric-card">
+          <h3>Accuracy</h3>
+          <span id="overall-accuracy" class="metric-value">0%</span>
+        </div>
+        <div class="metric-card">
+          <h3>Time Taken</h3>
+          <span id="time-taken" class="metric-value">00:00</span>
+        </div>
+        <div class="metric-card">
+          <h3>Attempted</h3>
+          <span id="attempted" class="metric-value">0</span>
+          <span class="metric-label">/ 150</span>
+        </div>
+      </div>
+
+      <div class="correct-wrong-summary">
+        <h3>Correct vs Wrong Summary</h3>
+        <div class="summary-bars">
+          <div class="bar correct-bar">
+            <span class="bar-label">Correct</span>
+            <div class="bar-fill" id="correct-bar" style="width: 0%"></div>
+            <span class="bar-value" id="correct-count">0</span>
+          </div>
+          <div class="bar wrong-bar">
+            <span class="bar-label">Wrong</span>
+            <div class="bar-fill" id="wrong-bar" style="width: 0%"></div>
+            <span class="bar-value" id="wrong-count">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-cards" id="section-cards"></div>
+
+      <div class="subject-highlights">
+        <div class="highlight-card best">
+          <h3>Best Subject</h3>
+          <span id="best-subject">Physics</span>
+        </div>
+        <div class="highlight-card weak">
+          <h3>Weak Subject</h3>
+          <span id="weak-subject">Mathematics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="overview.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\overview.html

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHT CET Charts</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="charts-screen">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab">Overview</a>
+      <a href="sectional-analysis.html" class="tab">Sectional</a>
+      <a href="time-analysis.html" class="tab">Time</a>
+      <a href="question-analysis.html" class="tab">Questions</a>
+      <a href="performance-summary.html" class="tab">Performance</a>
+      <a href="charts.html" class="tab active">Charts</a>
+    </div>
+    <div class="analysis-container">
+      <div class="analysis-header">
+        <h2>Charts</h2>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>Correct vs Wrong (Pie)</h3>
+          <canvas id="correct-wrong-pie"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Section-wise Score (Bar)</h3>
+          <canvas id="section-score-bar"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Time Spent (Bar)</h3>
+          <canvas id="time-spent-bar"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Accuracy Comparison</h3>
+          <canvas id="accuracy-comparison"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="charts.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\charts.html

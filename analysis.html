@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHT CET Analysis</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="analysis-screen">
+    <div class="analysis-container">
+      <div class="analysis-header">
+        <div class="header-logo"><span class="logo-mht">MHT</span><span class="logo-cet">CET</span></div>
+        <h2>Test Analysis</h2>
+        <p id="analysis-name" class="analysis-candidate"></p>
+      </div>
+
+      <div class="analysis-summary">
+        <div class="summary-card">
+          <h3>Total Score</h3>
+          <span id="total-score" class="score-number">0</span>
+          <span class="score-label">/ 200</span>
+        </div>
+        <div class="summary-card">
+          <h3>Rank</h3>
+          <span id="user-rank" class="rank-number">#1</span>
+        </div>
+        <div class="summary-card">
+          <h3>Best Subject</h3>
+          <span id="best-subject" class="best-subject">Physics</span>
+        </div>
+      </div>
+
+      <div class="analysis-section">
+        <h3>Section-wise Performance</h3>
+        <div class="section-stats" id="section-stats"></div>
+      </div>
+
+      <div class="analysis-section">
+        <h3>Time Consumed per Section</h3>
+        <div class="time-stats" id="time-stats"></div>
+      </div>
+
+      <div class="analysis-section">
+        <h3>Subject-wise Accuracy</h3>
+        <div class="accuracy-stats" id="accuracy-stats"></div>
+      </div>
+
+      <div class="analysis-section">
+        <h3>Subject-wise Attempts</h3>
+        <div class="attempts-stats" id="attempts-stats"></div>
+      </div>
+
+      <div class="analysis-section">
+        <h3>Correct vs Wrong Questions</h3>
+        <div class="charts-container">
+          <div class="chart-wrapper">
+            <h4>Physics</h4>
+            <canvas id="physics-chart"></canvas>
+          </div>
+          <div class="chart-wrapper">
+            <h4>Chemistry</h4>
+            <canvas id="chemistry-chart"></canvas>
+          </div>
+          <div class="chart-wrapper">
+            <h4>Mathematics</h4>
+            <canvas id="math-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="analysis-section">
+        <h3>Overall Performance</h3>
+        <div class="chart-wrapper">
+          <canvas id="overall-chart"></canvas>
+        </div>
+      </div>
+
+      <div class="analysis-actions">
+        <button id="back-to-home-btn" class="btn-secondary">Back to Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="analysis.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\analysis.html

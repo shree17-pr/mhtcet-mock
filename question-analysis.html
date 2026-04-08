@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHT CET Question Analysis</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="question-screen">
+    <div class="nav-tabs">
+      <a href="overview.html" class="tab">Overview</a>
+      <a href="sectional-analysis.html" class="tab">Sectional</a>
+      <a href="time-analysis.html" class="tab">Time</a>
+      <a href="question-analysis.html" class="tab active">Questions</a>
+      <a href="performance-summary.html" class="tab">Performance</a>
+      <a href="charts.html" class="tab">Charts</a>
+    </div>
+    <div class="analysis-container">
+      <div class="analysis-header">
+        <h2>Question Analysis</h2>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="correct">Correct</button>
+        <button class="filter-btn" data-filter="wrong">Wrong</button>
+        <button class="filter-btn" data-filter="skipped">Skipped</button>
+      </div>
+
+      <div class="question-table-container">
+        <table class="question-table">
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th>Question No</th>
+              <th>Your Answer</th>
+              <th>Correct Answer</th>
+              <th>Status</th>
+              <th>Time Spent</th>
+            </tr>
+          </thead>
+          <tbody id="question-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="question-analysis.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\question-analysis.html
