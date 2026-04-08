@@ -16,7 +16,7 @@ function loadData() {
 }
 
 function displayTimeAnalysis(data) {
-  const totalTime = TOTAL_TIME_SECONDS - data.timeLeft;
+  const totalTime = data.timeUsed || data.sections.reduce((sum, sec) => sum + parseTime(sec.time), 0);
   document.getElementById('total-time').textContent = formatTotalTime(totalTime);
 
   const totalAttempted = data.sections.reduce((sum, sec) => sum + sec.attempted, 0);
@@ -36,6 +36,19 @@ function displayTimeAnalysis(data) {
       <p>Time Spent: ${sec.time}</p>
     </div>
   `).join('');
+
+  const timeline = document.getElementById('timeline-bar');
+  const totalSeconds = totalTime || data.sections.reduce((sum, sec) => sum + parseTime(sec.time), 0);
+  timeline.innerHTML = data.sections.map(sec => {
+    const seconds = parseTime(sec.time);
+    const width = totalSeconds > 0 ? (seconds / totalSeconds) * 100 : 0;
+    return `
+      <div class="timeline-segment" style="flex:${seconds}; min-width:80px;">
+        <span class="segment-label">${sec.name}</span>
+        <span class="segment-time">${sec.time}</span>
+      </div>
+    `;
+  }).join('');
 }
 
 function formatTotalTime(seconds) {
@@ -47,5 +60,4 @@ function formatTotalTime(seconds) {
 function parseTime(timeStr) {
   const [m, s] = timeStr.split(':').map(Number);
   return m * 60 + s;
-}</content>
-<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\time-analysis.js
+}

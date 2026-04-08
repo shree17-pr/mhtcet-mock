@@ -247,6 +247,42 @@ body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gray-100); 
   border-radius: 8px;
 }
 
+.timeline-bar {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  margin-top: 1rem;
+  min-height: 120px;
+}
+
+.timeline-segment {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(59,130,246,0.9), rgba(34,197,94,0.9));
+  border-radius: 12px;
+  padding: 0.75rem;
+  color: #e5e7eb;
+  min-width: 100px;
+}
+
+.timeline-segment:nth-child(2) {
+  background: linear-gradient(180deg, rgba(34,197,94,0.9), rgba(59,130,246,0.9));
+}
+
+.timeline-segment:nth-child(3) {
+  background: linear-gradient(180deg, rgba(239,68,68,0.9), rgba(245,158,11,0.9));
+}
+
+.segment-label, .segment-time {
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.segment-time {
+  font-weight: 700;
+}
+
 /* Question styles */
 .filters {
   display: flex;

@@ -101,5 +101,4 @@ function displayCharts(data) {
 function parseTime(timeStr) {
   const [m, s] = timeStr.split(':').map(Number);
   return m * 60 + s;
-}</content>
-<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\charts.js
+}

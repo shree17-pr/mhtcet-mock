@@ -36,5 +36,4 @@ function displayPerformanceSummary(data) {
 
   const suggestionsList = document.getElementById('suggestions-list');
   suggestionsList.innerHTML = suggestions.map(s => `<li>${s}</li>`).join('');
-}</content>
-<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\performance-summary.js
+}

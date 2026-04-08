@@ -56,5 +56,4 @@ function filterQuestions(filter) {
       row.style.display = row.classList.contains(filter) ? '' : 'none';
     }
   });
-}</content>
-<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\question-analysis.js
+}

@@ -92,5 +92,4 @@ function createBarChart(canvasId, correct, wrong, label) {
       }
     }
   });
-}</content>
-<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\analysis.js
+}

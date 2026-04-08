@@ -433,6 +433,7 @@ function calculateResults() {
   });
 
   const bestSubject = sections.reduce((best, sec) => sec.score > best.score ? sec : best, sections[0]).name;
+  const timeUsed = TOTAL_TIME_SECONDS - state.timeLeft;
 
   return {
     candidateName: state.candidateName,
@@ -440,7 +441,8 @@ function calculateResults() {
     totalCorrect,
     totalWrong,
     sections,
-    bestSubject
+    bestSubject,
+    timeUsed
   };
 }
 
@@ -453,7 +455,7 @@ function storeResults(results) {
   leaderboard.push({
     name: results.candidateName,
     score: results.totalScore,
-    time: TOTAL_TIME_SECONDS - state.timeLeft, // total time taken
+    time: results.timeUsed,
     date: new Date().toISOString()
   });
 

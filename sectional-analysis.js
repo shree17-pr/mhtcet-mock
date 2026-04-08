@@ -58,5 +58,4 @@ function createBarChart(canvasId, correct, wrong, label) {
       plugins: { legend: { labels: { color: '#e5e7eb' } } }
     }
   });
-}</content>
-<parameter name="filePath">c:\Users\Shrip\OneDrive\Documents\GitHub\mhtcet-mock\sectional-analysis.js
+}
